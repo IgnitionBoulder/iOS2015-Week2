@@ -84,6 +84,4 @@ print("Car: \(car.make) \(car.model)")
 car.make = "Toyota"
 car.model = "Camry"
 print("Car: \(car.make) \(car.model)")
-
-
 //: [TOC](Table%20of%20Contents) | [Previous](@previous) | [Next](@next)

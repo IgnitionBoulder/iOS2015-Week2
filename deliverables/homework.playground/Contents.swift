@@ -3,21 +3,100 @@
 
 import Foundation
 
-//: Create a ListItem struct that will store the items for our shopping list. Include attributes for name and quantity
 
-//: Create a ItemCategory enum for categories that our items could belong to. Include 'Grocery', 'Household', 'Clothing' and anything else that you think might be good.
+// Create a ListItem struct that will store the items for our shopping list. Include attributes for name and quantity
 
-//: Create a ShoppingList class that will store our shopping list items, associated with the categories you created above. Include a quantity for each item type as well.
 
-//: Add a method to your ShoppingList class to add an item, with it's associated category and a quantity
+struct ListItem {
+    
+    var name: String
+    var quantity: Int
+    
+    init(name: String, quantity: Int) {
+        self.name = name
+        self.quantity = quantity
+        
+    }
+    
+}
 
-//: Add a method to your ShoppingList class that will return a sorted list of your items in a particular category, sorted by name alphabetically.
+
+// Create a ItemCategory enum for categories that our items could belong to. Include 'Grocery', 'Household', 'Clothing' and anything else that you think might be good.
+
+
+enum ItemCategory: String {
+    
+    case Grocery
+    case Household
+    case Clothing
+    case Equipment
+    case Work
+    
+}
+
+
+// Create a ShoppingList class that will store our shopping list items, associated with the categories you created above. Include a quantity for each item type as well.
+
+
+class ShoppingList {
+    
+    // Properties
+    
+    var shoppingListItems = [ItemCategory:[ListItem]]()
+    let name: String
+    let quantity: Int
+    
+    // Initializer
+    
+    init(shoppingListItems: [ItemCategory:[ListItem]], name: String, quantity: Int) {
+        self.shoppingListItems = shoppingListItems
+        self.name = name
+        self.quantity = quantity
+    }
+    
+    
+    // Add a method to your ShoppingList class to add an item, with it's associated category and a quantity
+    
+    
+    // Methods
+    
+    func addItem(category: ItemCategory, name: String, quantity: Int) {
+        shoppingListItems.append(category: ItemCategory, name: String, quantity: 0))
+    }
+    
+    
+    //: Add a method to your ShoppingList class that will return a sorted list of your items in a particular category, sorted by name alphabetically.
+    
+    
+    func returnSorted( somehow I need to reference the items that will be passed into this function ) -> [String] {
+        
+        
+    }
+    
+    // returning a sorted list of items in an array of category items, sorted alphabetically
+}
+
 
 //: Add a CustomStringConvertible extension to your ShoppingList class that will print your items, by category, with their quantities, with one item per line, sorted by name alphabetically. Include the header "Shopping List:", prefix each category with "*" and prefix each item with "  - ".
 
+// I plan on doing this problem after understanding it better.
+
 //: Create a method on ShoppingList that returns a new array containing the first letter of each category, in uppercase. The returned array should be sorted and not have any repeated characters.
 
+// I plan on doing this problem after understanding it better.
+
 //: Create a method that searches the items array and returns all items, in all categories, that match the input string. Ignore uppercase/lowercase differences.
+
+// I plan on doing this problem after understanding it better.
+
+
+
+
+
+
+
+
+
 
 
 //: Uncomment the code below and make sure your code above works properly
