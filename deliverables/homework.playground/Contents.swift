@@ -37,8 +37,18 @@ class ShoppingList {
     
 //: Add a method to your ShoppingList class that will return a sorted list of your items in a particular category, sorted by name alphabetically.
     
-    func sortByCategory(category: ItemCategory) {
-        self.allItems.filter{($0.1 == category)}.sort({$0.0.name < $1.0.name})
+    func sortByCategory(category: ItemCategory) -> [(item: ListItem, category: ItemCategory)] {
+        return self.allItems.filter{($0.1 == category)}.sort({$0.0.name < $1.0.name})
+    }
+    
+    func categories() -> [String] {
+        var categoryArray: [String] = []
+        for item in self.allItems {
+            if (!categoryArray.contains(item.1.rawValue)) {
+                categoryArray.append(item.1.rawValue)
+            }
+        }
+        return categoryArray
     }
     
 //: Create a method on ShoppingList that returns a new array containing the first letter of each category, in uppercase. The returned array should be sorted and not have any repeated characters.
@@ -67,21 +77,28 @@ class ShoppingList {
 
 }
 
-
-
 //: Add a CustomStringConvertible extension to your ShoppingList class that will print your items, by category, with their quantities, with one item per line, sorted by name alphabetically. Include the header "Shopping List:", prefix each category with "*" and prefix each item with "  - ".
 
-
-
-
-
-
+extension ShoppingList: CustomStringConvertible {
+    var description: String {
+        var printedList: String = "Shopping List\n"
+        for category in self.categories() {
+            printedList += "* \(category)\n"
+            for item in self.sortByCategory(ItemCategory(rawValue: category)!) {
+                printedList +=  " - \(item.0.name) - \(item.0.quantity)\n"
+            }
+        }
+        return printedList
+    }
+}
 
 //: Uncomment the code below and make sure your code above works properly
+
 let apples = ListItem(name: "apples", quantity: 2)
 let milk = ListItem(name: "milk", quantity: 2)
 let bread = ListItem(name: "bread", quantity: 3)
 let broom = ListItem(name: "broom", quantity: 1)
+let bucket = ListItem(name: "bucket", quantity: 10)
 bread.quantity
 
 
@@ -90,8 +107,10 @@ list.addItem(apples, category: .Grocery)
 list.addItem(bread, category: .Grocery)
 list.addItem(milk, category: .Grocery)
 list.addItem(broom, category: .Household)
+list.addItem(bucket, category: .Household)
 
 list.sortByCategory(.Grocery)
+list.categories()
 
 ///* Expected output: 
 //
@@ -102,7 +121,8 @@ list.sortByCategory(.Grocery)
 //* Household
 //  - broom - 1
 //*/
-//print(list)
+
+print(list)
 //
 ///* Expected Array: ["G", "H"] */
 let firstLetters = list.categoryFirstLetters()
