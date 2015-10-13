@@ -107,6 +107,7 @@ let taco = MexicanDish(rawValue: "Taco")
 //: Swift will create a default raw value for string enum cases
 let fajita = MexicanDish.Fajita
 print(fajita.rawValue)
+// defaults to the string
 
 //: ## Enum equality
 //: All enums of the same type are equal to each other
