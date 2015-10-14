@@ -27,7 +27,7 @@ struct ListItem {
 // can also get automatic raw values
 
 
-//////// Refactor //////////////////////////////////////:
+//////// Refactor in class //////////////////////////////////////:
 
 
 enum ItemCategory: String {
@@ -80,7 +80,29 @@ extension ShoppingList2: CustomStringConvertible {
 // here, description is a computed property ^^
 
 
+extension ShoppingList2 {
+    func categoryFirstLetters() -> [String] {
+        var firstLetters = Set<String>()
+        for category in items.keys {
+            firstLetters.insert(String(category.rawValue.characters.first!))
+        }
+        return Array(firstLetters).sort()
+    }
+}
 
+extension ShoppingList2 {
+    func itemsMatching(search: String) -> [ListItem] {
+        var matching = [ListItem]()
+        for itemArray in items.values {
+            for item in itemArray {
+                if item.name.lowercaseString.containsString(search.lowercaseString) {
+                    matching.append(item)
+                }
+            }
+        }
+        return matching
+    }
+}
 
 //////// My solutions //////////////////////////////////////:
 
@@ -91,7 +113,7 @@ class ShoppingList {
         self.allItems = []
     }
     
-//: Add a method to your ShoppingList class to add an item, with it's associated category and a quantity
+//: Add a method to your ShoppingList class to add an item, with its associated category and a quantity
     
     func addItem(item: ListItem, category: ItemCategory) {
         self.allItems.append(item: item, category: category)
@@ -187,9 +209,9 @@ list.addItem(bucket, category: .Household)
 print(list)
 //
 ///* Expected Array: ["G", "H"] */
-//let firstLetters = list.categoryFirstLetters()
+let firstLetters = list.categoryFirstLetters()
 //
 ///* Expected Items: milk, broom */
-//let matchingItems = list.itemsMatching("m")
+let matchingItems = list.itemsMatching("m")
 
 
