@@ -5,22 +5,84 @@ import Foundation
 
 //: Create a ListItem struct that will store the items for our shopping list. Include attributes for name and quantity
 
+
+
 struct ListItem {
     var name: String
     var quantity: Int = 0
 }
 
+// Initializers are built in in swift. No need to create your own.
+
 //: Create a ItemCategory enum for categories that our items could belong to. Include 'Grocery', 'Household', 'Clothing' and anything else that you think might be good.
 // enum -- defining a new type with all possible values for that type
 
+//enum ItemCategory: String {
+//    case Grocery = "Grocery"
+//    case Household = "Household"
+//    case Toiletries = "Toiletries"
+//    case Pet = "Pet"
+//}
+
+// can also get automatic raw values
+
+
+//////// Refactor //////////////////////////////////////:
+
+
 enum ItemCategory: String {
-    case Grocery = "Grocery"
-    case Household = "Household"
-    case Toiletries = "Toiletries"
-    case Pet = "Pet"
+    case Grocery
+    case Household
+    case Toiletries
+    case Pet
 }
 
 //: Create a ShoppingList class that will store our shopping list items, associated with the categories you created above. Include a quantity for each item type as well.
+
+class ShoppingList2 {
+    var items = [ItemCategory: [ListItem]]()
+}
+
+extension ShoppingList2 {
+    func addItem(item: ListItem, category: ItemCategory) {
+        var itemsForCategory = items[category]
+        if itemsForCategory == nil {
+            itemsForCategory = [ListItem]()
+        }
+        itemsForCategory!.append(item)
+        items[category] = itemsForCategory
+    }
+}
+
+extension ShoppingList2 {
+    func sortItems(category: ItemCategory) -> [ListItem] {
+        var sortedItems = [ListItem]()
+        if let itemsForCategory = items[category] {
+            sortedItems = itemsForCategory.sort({$0.name < $1.name})
+        }
+        return sortedItems
+    }
+}
+
+extension ShoppingList2: CustomStringConvertible {
+    var description: String {
+        var string = "Shopping List \n"
+        for (category, itemsForCategory) in items {
+            string += "* \(category.rawValue) \n"
+            for item in itemsForCategory {
+                string += "\t- \(item.name) \n"
+            }
+        }
+        return string
+    }
+}
+
+// here, description is a computed property ^^
+
+
+
+
+//////// My solutions //////////////////////////////////////:
 
 class ShoppingList {
     var allItems: [(item: ListItem, category: ItemCategory)]
@@ -102,15 +164,15 @@ let bucket = ListItem(name: "bucket", quantity: 10)
 bread.quantity
 
 
-var list = ShoppingList()
+var list = ShoppingList2()
 list.addItem(apples, category: .Grocery)
 list.addItem(bread, category: .Grocery)
 list.addItem(milk, category: .Grocery)
 list.addItem(broom, category: .Household)
 list.addItem(bucket, category: .Household)
 
-list.sortByCategory(.Grocery)
-list.categories()
+//list.sortByCategory(.Grocery)
+//list.categories()
 
 ///* Expected output: 
 //
@@ -125,9 +187,9 @@ list.categories()
 print(list)
 //
 ///* Expected Array: ["G", "H"] */
-let firstLetters = list.categoryFirstLetters()
+//let firstLetters = list.categoryFirstLetters()
 //
 ///* Expected Items: milk, broom */
-let matchingItems = list.itemsMatching("m")
+//let matchingItems = list.itemsMatching("m")
 
 
