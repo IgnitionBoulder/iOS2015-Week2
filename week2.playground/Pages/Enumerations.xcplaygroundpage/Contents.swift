@@ -56,6 +56,7 @@ extension Animal {
 print(pet.feed(3))
 print(pet.feed(100))
 
+
 //: ## Computed Properties
 //: Enums can contain variables that are computed at run time, rather than compile time.
 
